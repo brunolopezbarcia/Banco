@@ -25,13 +25,18 @@ public class CuentaBancaria {
 	}
 	
 	public double ingresar(double cuanto) {
+		/* TODO corregir tras realizar el test de ingreso de CuentaAhorro. */
 		saldo += cuanto;
 		return saldo;
 	}
 	
 	public double retirar(double cuanto)
-	throws IllegalArgumentException {
-		saldo -= cuanto;
+	 {
+		 if (cuanto >= 0) {
+			 saldo -= cuanto;
+		 } else {
+			 throw new IllegalArgumentException("No se puede retirar una cantidad de dinero negativa");
+		 }
 		return saldo;
 	}
 }
