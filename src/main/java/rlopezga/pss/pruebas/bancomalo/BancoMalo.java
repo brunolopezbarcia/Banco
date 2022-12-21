@@ -35,7 +35,15 @@ public class BancoMalo {
 	}
 	
 	public void agregarCuenta(CuentaBancaria cuentaBancaria) {
-		cuentas.add(cuentaBancaria);
+		boolean existeCuenta = false;
+		for (CuentaBancaria cuentaActual : cuentas) {
+			if (cuentaActual.numeroCuenta.equals(cuentaBancaria.getNumeroCuenta())) {
+				throw new IllegalArgumentException("Ese numero de cuenta ya existe");
+			}
+		}
+		if (!existeCuenta) {
+			cuentas.add(cuentaBancaria);
+		}
 	}
 	
 	public boolean quitarCuenta(String id) {

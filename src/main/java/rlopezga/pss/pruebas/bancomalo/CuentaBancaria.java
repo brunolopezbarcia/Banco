@@ -25,8 +25,11 @@ public class CuentaBancaria {
 	}
 	
 	public double ingresar(double cuanto) {
-		/* TODO corregir tras realizar el test de ingreso de CuentaAhorro. */
-		saldo += cuanto;
+		if (cuanto >= 0) {
+			saldo += cuanto;
+		} else {
+			throw new IllegalArgumentException("No se puede ingresar una cantidad de dinero negativa");
+		}
 		return saldo;
 	}
 	
