@@ -43,7 +43,10 @@ class CuentaBancariaTest {
         cuentaBancaria1.ingresar(100);
         Assertions.assertTrue(pre_ingreso_cuenta_bancaria1 <= cuentaBancaria1.getSaldo());
         Assertions.assertEquals(600.0, cuentaBancaria1.getSaldo());
+    }
 
+    @Test 
+    void cuentaBancaria_ingresar_negativo() {
         //Ingresamos una cantidad negativa(utilizaremos la cuenta2)
         double pre_ingreso_cuenta_bancaria_2 = cuentaBancaria2.getSaldo();
         cuentaBancaria2.ingresar(-1000.0);
@@ -58,18 +61,24 @@ class CuentaBancariaTest {
         cuentaBancaria1.retirar(100);
         Assertions.assertTrue(pre_retirada_cuenta_bancaria_1 >= cuentaBancaria1.getSaldo());
         Assertions.assertEquals(400.0, cuentaBancaria1.getSaldo());
+    }
 
+@Test
+void retirar_cantidad_negativa(){
         // Retiraremos -1000€
         double pre_retirada_cuenta_bancaria_2 = cuentaBancaria2.getSaldo();
         Exception exception = assertThrows(IllegalArgumentException.class,() -> cuentaBancaria2.retirar(-1000.0));
         Assertions.assertEquals("No se puede retirar una cantidad de dinero negativa", exception.getMessage());
         Assertions.assertEquals(12000.0, cuentaBancaria2.getSaldo());
         Assertions.assertTrue(pre_retirada_cuenta_bancaria_2 == cuentaBancaria2.getSaldo());
+}
 
-        // Retirar mas dinero del disponible en la cuenta
-        double pre_retirada_cuenta_bancaria_3 = cuentaBancaria2.getSaldo();
-        cuentaBancaria2.retirar(13000.0);
-        Assertions.assertEquals(-1000.0, cuentaBancaria2.getSaldo());
-        Assertions.assertTrue(pre_retirada_cuenta_bancaria_3 >= cuentaBancaria2.getSaldo());
-    }
+@Test
+void retirar_mas_de_lo_que_tiene() {
+    // Retirar mas dinero del disponible en la cuenta
+    double pre_retirada_cuenta_bancaria_3 = cuentaBancaria2.getSaldo();
+    cuentaBancaria2.retirar(13000.0);
+    Assertions.assertEquals(-1000.0, cuentaBancaria2.getSaldo());
+    Assertions.assertTrue(pre_retirada_cuenta_bancaria_3 >= cuentaBancaria2.getSaldo());
+}
 }
