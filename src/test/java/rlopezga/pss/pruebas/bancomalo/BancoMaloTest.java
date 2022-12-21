@@ -35,21 +35,35 @@ class BancoMaloTest {
     }
 
     @Test
-    void getCuentas() {
-        Assertions.assertEquals(1, banco1.getCuentas());
-    }
-
-    @Test
     void getCuenta() {
         Assertions.assertEquals(cuenta1, banco1.getCuenta("1111"));
         Assertions.assertEquals(null, banco1.getCuenta("2222"));
     }
 
     @Test
-    void agregarCuenta() {
+    void agregarCuenta_que_no_existe() {
+        Assertions.assertEquals(1, banco1.getCuentas().size()); // Debido cuando iniciamos los test añadimos una
+        banco1.agregarCuenta(cuenta2); // No estaba añadida anteriormente
+        Assertions.assertEquals(2, banco1.getCuentas().size());
+    }
+    @Test
+    void agregarCuenta_que_si_existe() {
+        Assertions.assertEquals(1, banco1.getCuentas().size()); // Debido cuando iniciamos los test añadimos una
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> banco1.agregarCuenta(cuenta1)); // Si estaba añadida anteriormente)
+        Assertions.assertEquals("Ese numero de cuenta ya existe", exception.getMessage());
+        Assertions.assertEquals(1, banco1.getCuentas().size());
     }
 
     @Test
-    void quitarCuenta() {
+    void quitarCuenta_que_si_existe() {
+        Assertions.assertTrue(banco1.quitarCuenta("1111"));
+        Assertions.assertEquals(0, banco1.getCuentas().size());
+
+    }
+    @Test
+    void quitarCuenta_que_no_existe() {
+        Assertions.assertFalse(banco1.quitarCuenta("CuentaQueNoExiste"));
+        Assertions.assertEquals(1, banco1.getCuentas().size());
+
     }
 }
